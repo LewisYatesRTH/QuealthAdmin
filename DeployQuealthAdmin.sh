@@ -6,9 +6,9 @@ dev_repo='/Repo1/nextgen2dev/'
 staginglive_repo='/Repo1/nextgen2/'
 #DB Connection Strings
 dbconnectionstring_dev='db: "mongodb://admin-user:admin@lon-mongos1.objectrocket.com:23135/mean-dev?authMechanism=SCRAM-SHA-1&authSource=mean-dev",'
-dbconnectionstring_local='//db: "mongodb://localhost/mean-dev",'
-dbconnectionstring_staging='//db: "mongodb://admin-user:admin@lon-mongos1.objectrocket.com:23135/mean-staging?authMechanism=SCRAM-SHA-1&authSource=mean-staging",'
-dbconnectionstring_live='//db: "mongodb://admin:admin@lon-mongos1.objectrocket.com:23047/mean-live?authMechanism=SCRAM-SHA-1&authSource=mean-live",'
+dbconnectionstring_local='db: "mongodb://localhost/mean-dev",'
+dbconnectionstring_staging='db: "mongodb://admin-user:admin@lon-mongos1.objectrocket.com:23135/mean-staging?authMechanism=SCRAM-SHA-1&authSource=mean-staging",'
+dbconnectionstring_live='db: "mongodb://admin:admin@lon-mongos1.objectrocket.com:23047/mean-live?authMechanism=SCRAM-SHA-1&authSource=mean-live",'
 #Ports
 port_dev=3000
 port_staging=4000
@@ -24,7 +24,6 @@ fi
 if [ $1 != dev ] || [ $1 != staging ] || [ $1 != live ]; then
   echo incorrect syntax used, try: dev/staging/live
 fi
-
 
 #Change directory to correct repository
 echo $1 Deployment selected - Quealth Admin Backend
@@ -79,17 +78,17 @@ fi
 
 #remove redundant db connection strings (dependant on the env)
 if [ $1 = dev ]; then
-  sed -i'.bak' -e "s|$dbconnectionstring_local||" code/$1/nextgen2/config/env/development.js
-  sed -i'.bak' -e "s|$dbconnectionstring_staging||" code/$1/nextgen2/config/env/development.js
-  sed -i'.bak' -e "s|$dbconnectionstring_live||" code/$1/nextgen2/config/env/development.js
+  sed -i'.bak' -e "s|//$dbconnectionstring_local||" code/$1/nextgen2/config/env/development.js
+  sed -i'.bak' -e "s|//$dbconnectionstring_staging||" code/$1/nextgen2/config/env/development.js
+  sed -i'.bak' -e "s|//$dbconnectionstring_live||" code/$1/nextgen2/config/env/development.js
 elif [ $1 = staging ]; then
-  sed -i'.bak' -e "s|$dbconnectionstring_local||" code/$1/nextgen2/config/env/development.js
-  sed -i'.bak' -e "s|$dbconnectionstring_dev||" code/$1/nextgen2/config/env/development.js
-  sed -i'.bak' -e "s|$dbconnectionstring_live||" code/$1/nextgen2/config/env/development.js
+  sed -i'.bak' -e "s|//$dbconnectionstring_local||" code/$1/nextgen2/config/env/development.js
+  sed -i'.bak' -e "s|//$dbconnectionstring_dev||" code/$1/nextgen2/config/env/development.js
+  sed -i'.bak' -e "s|//$dbconnectionstring_live||" code/$1/nextgen2/config/env/development.js
 elif [ $1 = live ]; then
-  sed -i'.bak' -e "s|$dbconnectionstring_local||" code/$1/nextgen2/config/env/development.js
-  sed -i'.bak' -e "s|$dbconnectionstring_dev||" code/$1/nextgen2/config/env/development.js
-  sed -i'.bak' -e "s|$dbconnectionstring_staging||" code/$1/nextgen2/config/env/development.js
+  sed -i'.bak' -e "s|//$dbconnectionstring_local||" code/$1/nextgen2/config/env/development.js
+  sed -i'.bak' -e "s|//$dbconnectionstring_dev||" code/$1/nextgen2/config/env/development.js
+  sed -i'.bak' -e "s|//$dbconnectionstring_staging||" code/$1/nextgen2/config/env/development.js
 fi
 
 #change the permissions of the uploads folder
